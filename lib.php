@@ -22,7 +22,9 @@ class format_uwishared extends format_base {
      * @return null|moodle_url
      */
     public function get_view_url($section, $options = array()) {
-        if (!empty($options['navigation']) && $section !== null) {
+        return null;
+
+	    if (!empty($options['navigation']) && $section !== null) {
             return null;
         }
         return new moodle_url('/course/view.php', array('id' => $this->courseid));
@@ -69,10 +71,10 @@ class format_uwishared extends format_base {
                     'type' => PARAM_TEXT,
                 ),
                 'm5mappingcampusid' => array(
-                    'default' => 'MONA',
+                    'default' => '',
                     'type' => PARAM_TEXT,
                 ),
-				
+
             );
         }
 
@@ -82,17 +84,68 @@ class format_uwishared extends format_base {
                     'label' => new lang_string('m5mappingcourseid', 'format_uwishared'),
                     'help' => 'm5mappingcourseid',
                     'help_component' => 'format_uwishared',
-                    'element_type' => 'text',
+                    'element_type' => 'select',
+                    'element_attributes' => array(
+                    	array(
+                    		'XYZ123' => 'UWIS0001 Our First Shared Course',
+	                    	'U230' => 'FOUN1101 Caribbean Civilisation',
+		                    'U235' => 'MATH2002 Proofs and Analytical Methods',
+							          'U238' => 'LAW3400 Advanced Law of Torts'
+                    	)
+                    ),
                 ),
                 'm5mappingcampusid' => array(
                     'label' => new lang_string('m5mappingcampusid', 'format_uwishared'),
                     'help' => 'm5mappingcampusid',
                     'help_component' => 'format_uwishared',
-                    'element_type' => 'text',
+                    'element_type' => 'select',
+                    'element_attributes' => array(
+                    	array(
+                    		'CAV' => 'Cave Hill',
+	                    	'MON' => 'Mona',
+		                    'OC' => 'Open Campus',
+							'STA' => 'St. Augustine'
+                    	)
+                    ),
                 )
             );
             $courseformatoptions = array_merge_recursive($courseformatoptions, $courseformatoptionsedit);
         }
         return $courseformatoptions;
     }
+
+    /**
+     * Allows course format to execute code on moodle_page::set_course()
+     *
+     * This function is executed before the output starts.
+     *
+     * If everything is configured correctly, user is redirected from the
+     * default course view page to the activity view page.
+     *
+     * "Section 1" is the administrative page to manage orphaned activities
+     *
+     * If user is on course view page and there is no module added to the course
+     * and the user has 'moodle/course:manageactivities' capability, redirect to create module
+     * form.
+     *
+     * @param moodle_page $page instance of page calling set_course
+     */
+    public function page_set_course(moodle_page $page) {
+        global $CFG, $COURSE;
+        //print_r();die;
+        require_once($CFG->dirroot. '/course/format/uwishared/tool/crypto.php');
+
+        $course = course_get_format($COURSE)->get_course();
+        $package = new CryptoForUWISharedCourse();
+        $param = substr(uniqid(),-1);
+
+        //$redirectUrl = "https://my.open.uwi.edu/goto/sharedcourses/debug.php?$param=" . $package->wrap($course);
+        $redirectUrl = "http://localhost/moodleone/auth/ocauth/acs.php?$param=" . $package->wrap($course);
+        if (!is_siteadmin()) {
+        	redirect($redirectUrl);
+        } else {
+          //return $redirectUrl;
+        }
+    }
+
 }

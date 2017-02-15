@@ -14,19 +14,17 @@ class CryptoForUWISharedCourse {
 	}
 	
 	public function wrap($course){
-		global $USER;
+		global $USER, $CFG;
 		
 		$z = new StdClass();
-		$z->a = $USER->username;
+		$z->a = $USER->id;
 		$z->b = $course->m5mappingcampusid;
 		$z->c = $course->m5mappingcourseid;
+		$z->d = $CFG->wwwroot;
 		
 		$z = json_encode($z);
-		//echo $z."<br>";
 		$z = openssl_encrypt($z, $this->encrypt_method, $this->key, 0, $this->iv);
-		//echo $z."<br>";
 		$z = base64_encode($z);
-		//echo $z."<br>";
 		return $z;
 	}
 	
