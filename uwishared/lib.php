@@ -132,9 +132,8 @@ class format_uwishared extends format_base {
      */
     public function page_set_course(moodle_page $page) {
         global $CFG, $COURSE;
-        //print_r();die;
         require_once($CFG->dirroot. '/course/format/uwishared/tool/crypto.php');
-        $baseUrl = $CFG->get_config('uwishared', 'm5uwi');
+        $baseUrl = get_config('format_uwishared')->m5url;
 
         $course = course_get_format($COURSE)->get_course();
         $package = new CryptoForUWISharedCourse();

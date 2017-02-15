@@ -52,7 +52,7 @@
         'base64_encode',
         'base64_decode',
         'openssl_encrypt',
-        'openssl_descrypt'
+        'openssl_decrypt'
       );
 
       foreach ($funcs as $key => $func) {
