@@ -134,13 +134,14 @@ class format_uwishared extends format_base {
         global $CFG, $COURSE;
         //print_r();die;
         require_once($CFG->dirroot. '/course/format/uwishared/tool/crypto.php');
+        $baseUrl = $CFG->get_config('uwishared', 'm5uwi');
 
         $course = course_get_format($COURSE)->get_course();
         $package = new CryptoForUWISharedCourse();
         $param = substr(uniqid(),-1);
 
         //$redirectUrl = "https://my.open.uwi.edu/goto/sharedcourses/debug.php?$param=" . $package->wrap($course);
-        $redirectUrl = "http://localhost/moodleone/auth/ocauth/acs.php?$param=" . $package->wrap($course);
+        $redirectUrl = $baseUrl ."/auth/ocauth/acs.php?$param=" . $package->wrap($course);
         if (!is_siteadmin()) {
         	redirect($redirectUrl);
         } else {
