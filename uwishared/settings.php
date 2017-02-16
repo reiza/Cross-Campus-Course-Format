@@ -4,6 +4,7 @@
 * @copyright OC Dev Team
 */
 defined('MOODLE_INTERNAL') || die;
+
 require_once($CFG->dirroot. '/course/format/singleactivity/settingslib.php');
 
 if ($ADMIN->fulltree) {
