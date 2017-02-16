@@ -1,4 +1,8 @@
 <?php
+/**
+* @package   format_uwishared
+* @copyright OC Dev Team
+*/
 defined('MOODLE_INTERNAL') || die();
 
 class format_uwishared_renderer extends plugin_renderer_base {

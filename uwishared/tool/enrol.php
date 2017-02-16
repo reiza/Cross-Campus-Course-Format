@@ -1,4 +1,8 @@
 <?php
+/**
+* @package   format_uwishared
+* @copyright OC Dev Team
+*/
 require_once('./../../../../config.php');
 
 global $CFG, $DB;
@@ -22,7 +26,7 @@ $sql = "SELECT cfo.value as xrn
 $enrolment = $DB->get_records_sql($sql, array($userid));
 
 if ($enrolment) {
-	
+
 	foreach ($enrolment as $key => $value) {
 		$o->xrns[$value->xrn] = '5';
 	}
@@ -31,5 +35,5 @@ if ($enrolment) {
 header('Content-Type: application/json');
 echo json_encode($o);
 
-	
+
 ?>
