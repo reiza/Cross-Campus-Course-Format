@@ -22,7 +22,7 @@ class CryptoForUWISharedCourse {
 
 		$z = new StdClass();
 		$z->a = $USER->id;
-		$z->b = $course->smimappingcampusid;
+		$z->b = get_config('format_uwishared')->smimappingcampusid;
 		$z->c = $course->smicourseid;
 		$z->d = $CFG->wwwroot;
 
