@@ -24,52 +24,51 @@ class format_uwishared extends format_base {
 
 
   public function course_format_options($foreditform = false) {
+    $baseUrl = get_config('format_uwishared')->smiurl;
+    $json = download_file_content($baseUrl.'/sharedcourses.php');
+    $sc = (array) json_decode($json);
+
+
     static $courseformatoptions = false;
     if ($courseformatoptions === false) {
       $courseformatoptions = array(
-        'm5mappingcourseid' => array(
+        'smicourseid' => array(
           'default' => '',
           'type' => PARAM_TEXT,
         ),
-        'm5mappingcampusid' => array(
-          'default' => '',
-          'type' => PARAM_TEXT,
-        ),
+        // 'smimappingcampusid' => array(
+        //   'default' => '',
+        //   'type' => PARAM_TEXT,
+        // ),
 
       );
     }
 
-    if ($foreditform && !isset($courseformatoptions['m5mappingcourseid']['label'])) {
+    if ($foreditform && !isset($courseformatoptions['smicourseid']['label'])) {
       $courseformatoptionsedit = array(
-        'm5mappingcourseid' => array(
-          'label' => new lang_string('m5mappingcourseid', 'format_uwishared'),
-          'help' => 'm5mappingcourseid',
+        'smicourseid' => array(
+          'label' => new lang_string('smicourseid', 'format_uwishared'),
+          'help' => 'smicourseid',
           'help_component' => 'format_uwishared',
           'element_type' => 'select',
           'element_attributes' => array(
-            //Mock values for now
-            array(
-              'XYZ123' => 'UWIS0001 Our First Shared Course',
-              'U230' => 'FOUN1101 Caribbean Civilisation',
-              'U235' => 'MATH2002 Proofs and Analytical Methods',
-              'U238' => 'LAW3400 Advanced Law of Torts'
-            )
+            $sc
           ),
         ),
-        'm5mappingcampusid' => array(
-          'label' => new lang_string('m5mappingcampusid', 'format_uwishared'),
-          'help' => 'm5mappingcampusid',
-          'help_component' => 'format_uwishared',
-          'element_type' => 'select',
-          'element_attributes' => array(
-            array(
-              'CAV' => 'Cave Hill',
-              'MON' => 'Mona',
-              'OC' => 'Open Campus',
-              'STA' => 'St. Augustine'
-            )
-          ),
-          )
+        // 'smimappingcampusid' => array(
+        //   'label' => new lang_string('smimappingcampusid', 'format_uwishared'),
+        //   'help' => 'smimappingcampusid',
+        //   'help_component' => 'format_uwishared',
+        //   'element_type' => 'select',
+        //   'element_attributes' => array(
+        //     array(
+        //       'CAV' => 'Cave Hill',
+        //       'MON' => 'Mona',
+        //       'OC' => 'Open Campus',
+        //       'STA' => 'St. Augustine'
+        //     )
+        //   ),
+        //   )
         );
         $courseformatoptions = array_merge_recursive($courseformatoptions, $courseformatoptionsedit);
       }
@@ -79,7 +78,7 @@ class format_uwishared extends format_base {
     public function page_set_course(moodle_page $page) {
       global $CFG, $COURSE;
       require_once($CFG->dirroot. '/course/format/uwishared/tool/crypto.php');
-      $baseUrl = get_config('format_uwishared')->m5url;
+      $baseUrl = get_config('format_uwishared')->smiurl;
 
       $course = course_get_format($COURSE)->get_course();
       $package = new CryptoForUWISharedCourse();

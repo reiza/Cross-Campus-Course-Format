@@ -22,7 +22,7 @@ $sql = "SELECT cfo.value as xrn
           -- JOIN {course} c ON e.courseid = c.id
 		  JOIN {course_format_options} cfo ON e.courseid = cfo.courseid
           WHERE u.username = ?
-          AND cfo.name = 'm5mappingcourseid'";
+          AND cfo.name = 'smicourseid'";
 $enrolment = $DB->get_records_sql($sql, array($userid));
 
 if ($enrolment) {

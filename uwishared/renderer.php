@@ -10,7 +10,7 @@ class format_uwishared_renderer extends plugin_renderer_base {
     public function display($course) {
         $courserenderer = $this->page->get_renderer('core', 'course');
         global $CFG;
-        $baseUrl = get_config('format_uwishared')->m5url;
+        $baseUrl = get_config('format_uwishared')->smiurl;
         require_once($CFG->dirroot. '/course/format/uwishared/tool/crypto.php');
 
         $course = course_get_format($course)->get_course();

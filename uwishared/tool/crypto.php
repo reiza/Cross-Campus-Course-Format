@@ -22,8 +22,8 @@ class CryptoForUWISharedCourse {
 
 		$z = new StdClass();
 		$z->a = $USER->id;
-		$z->b = $course->m5mappingcampusid;
-		$z->c = $course->m5mappingcourseid;
+		$z->b = $course->smimappingcampusid;
+		$z->c = $course->smicourseid;
 		$z->d = $CFG->wwwroot;
 
 		$z = json_encode($z);
