@@ -23,14 +23,37 @@ $sql = "SELECT cfo.value as xrn
 		  JOIN {course_format_options} cfo ON e.courseid = cfo.courseid
           WHERE u.username = ?
           AND cfo.name = 'smicourseid'";
+
+
+$sql = "SELECT
+          u.`username`,
+          cr.`shortname` as 'remotecourseshortname',
+          r.`id` as 'remoteroleid',
+          r.`name` as 'remoterolename',
+          r.`shortname` as 'remoteroleshortname',
+          cfo.`value` as 'smicourseid'
+        FROM
+          {role_assignments} ra
+        JOIN {user} u ON ra.`userid` = u.`id`
+        JOIN {context} c ON ra.`contextid` = c.`id`
+        JOIN {course} cr ON c.`instanceid`=cr.`id`
+        JOIN {role} r ON ra.`roleid`=r.`id`
+        JOIN {course_format_options} cfo
+            ON      cfo.`courseid`=c.`id`
+                AND cfo.`name`='smicourseid'
+								WHERE u.username = ?";
+
+
+
+
 $enrolment = $DB->get_records_sql($sql, array($userid));
 
-if ($enrolment) {
-
-	foreach ($enrolment as $key => $value) {
-		$o->xrns[$value->xrn] = '5';
-	}
-}
+// if ($enrolment) {
+//
+// 	foreach ($enrolment as $key => $value) {
+// 		$o->xrns[$value->xrn] = '5';
+// 	}
+// }
 
 header('Content-Type: application/json');
 echo json_encode($o);
