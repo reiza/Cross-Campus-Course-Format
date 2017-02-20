@@ -26,7 +26,11 @@ class format_uwishared extends format_base {
   public function course_format_options($foreditform = false) {
     $baseUrl = get_config('format_uwishared')->smiurl;
     $json = download_file_content($baseUrl.'/sharedcourses.php');
-    $sc = (array) json_decode($json);
+    $jsonData = (array) json_decode($json);
+
+    if($jsonData){
+      print_r($jsonData);die;
+    }
 
 
     static $courseformatoptions = false;
@@ -35,12 +39,7 @@ class format_uwishared extends format_base {
         'smicourseid' => array(
           'default' => '',
           'type' => PARAM_TEXT,
-        ),
-        // 'smimappingcampusid' => array(
-        //   'default' => '',
-        //   'type' => PARAM_TEXT,
-        // ),
-
+        )
       );
     }
 
@@ -54,40 +53,26 @@ class format_uwishared extends format_base {
           'element_attributes' => array(
             $sc
           ),
-        ),
-        // 'smimappingcampusid' => array(
-        //   'label' => new lang_string('smimappingcampusid', 'format_uwishared'),
-        //   'help' => 'smimappingcampusid',
-        //   'help_component' => 'format_uwishared',
-        //   'element_type' => 'select',
-        //   'element_attributes' => array(
-        //     array(
-        //       'CAV' => 'Cave Hill',
-        //       'MON' => 'Mona',
-        //       'OC' => 'Open Campus',
-        //       'STA' => 'St. Augustine'
-        //     )
-        //   ),
-        //   )
-        );
-        $courseformatoptions = array_merge_recursive($courseformatoptions, $courseformatoptionsedit);
-      }
-      return $courseformatoptions;
+        )
+      );
+      $courseformatoptions = array_merge_recursive($courseformatoptions, $courseformatoptionsedit);
     }
-
-    public function page_set_course(moodle_page $page) {
-      global $CFG, $COURSE;
-      require_once($CFG->dirroot. '/course/format/uwishared/tool/crypto.php');
-      $baseUrl = get_config('format_uwishared')->smiurl;
-
-      $course = course_get_format($COURSE)->get_course();
-      $package = new CryptoForUWISharedCourse();
-      $param = substr(uniqid(),-1);
-
-      $redirectUrl = $baseUrl ."/auth/ocauth/acs.php?$param=" . $package->wrap($course);
-      if (!is_siteadmin()) {
-        redirect($redirectUrl);
-      }
-    }
-
+    return $courseformatoptions;
   }
+
+  public function page_set_course(moodle_page $page) {
+    global $CFG, $COURSE;
+    require_once($CFG->dirroot. '/course/format/uwishared/tool/crypto.php');
+    $baseUrl = get_config('format_uwishared')->smiurl;
+
+    $course = course_get_format($COURSE)->get_course();
+    $package = new CryptoForUWISharedCourse();
+    $param = substr(uniqid(),-1);
+
+    $redirectUrl = $baseUrl ."/auth/ocauth/acs.php?$param=" . $package->wrap($course);
+    if (!is_siteadmin()) {
+      redirect($redirectUrl);
+    }
+  }
+
+}
