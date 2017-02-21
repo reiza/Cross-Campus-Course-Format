@@ -29,7 +29,7 @@ class format_uwishared extends format_base {
     $jsonData = (array) json_decode($json);
 
     if($jsonData){
-      print_r($jsonData);die;
+    //  print_r($jsonData);die;
     }
 
 
