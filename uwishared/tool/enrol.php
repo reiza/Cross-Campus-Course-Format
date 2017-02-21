@@ -26,21 +26,21 @@ $sql = "SELECT cfo.value as xrn
 
 
 $sql = "SELECT
-          u.`username`,
-          cr.`shortname` as 'remotecourseshortname',
-          r.`id` as 'remoteroleid',
-          r.`name` as 'remoterolename',
-          r.`shortname` as 'remoteroleshortname',
-          cfo.`value` as 'smicourseid'
+          u.username,
+          c.shortname as 'remotecourseshortname',
+          r.id as 'remoteroleid',
+          r.name as 'remoterolename',
+          r.shortname as 'remoteroleshortname',
+          cfo.value as 'smicourseid'
         FROM
           {role_assignments} ra
-        JOIN {user} u ON ra.`userid` = u.`id`
-        JOIN {context} c ON ra.`contextid` = c.`id`
-        JOIN {course} cr ON c.`instanceid`=cr.`id`
-        JOIN {role} r ON ra.`roleid`=r.`id`
+        JOIN {user} u ON ra.userid = u.id
+        JOIN {context} ctx ON ra.contextid = ctx.id
+        JOIN {course} c ON ctx.instanceid=c.id
+        JOIN {role} r ON ra.roleid=r.id
         JOIN {course_format_options} cfo
-            ON      cfo.`courseid`=c.`id`
-                AND cfo.`name`='smicourseid'
+            ON      cfo.courseid=c.id
+                AND cfo.name='smicourseid'
 								WHERE u.username = ?";
 
 
