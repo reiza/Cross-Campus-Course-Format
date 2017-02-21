@@ -25,11 +25,14 @@ class format_uwishared extends format_base {
 
   public function course_format_options($foreditform = false) {
     $baseUrl = get_config('format_uwishared')->smiurl;
+    $sc = array();
     $json = download_file_content($baseUrl.'/sharedcourses.php');
     $jsonData = (array) json_decode($json);
 
     if($jsonData){
-    //  print_r($jsonData);die;
+      foreach ($jsonData as $key => $value) {
+        $sc[$key]=$value->fullname . ' / XRN: ' . $value->idnumber;
+      }
     }
 
 
