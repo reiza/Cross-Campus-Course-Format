@@ -11,9 +11,9 @@ This is a course format for Moodle
 5. Click on the "Upgrade Moodle database now" button.
 6. Moodle should display the "Upgrading to new version" page and a success message. Click on the "Continue" button.
 7. The settings page for the URL of Moodle with Shared Courses should now be displayed. 
-- Enter the URL for the Moodle with the shared courses
-- Set the Campus of origin
-- Click "Save Changes" button
+  - Enter the URL for the Moodle with the shared courses
+  - Set the Campus of origin
+  - Click "Save Changes" button
 8. The plugin is installed and should be available for use in courses.
 
 ## Usage
