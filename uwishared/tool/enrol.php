@@ -34,7 +34,13 @@ $sql = "SELECT
 
 $enrolment = $DB->get_records_sql($sql, array($userid));
 
+if ($enrolment) {
+  foreach ($enrolment as $user => $enrols) {
+    $o->xrns[$enrols->smicourseid] = $enrols->remoteroleid;
+  }
+}
+
 header('Content-Type: application/json');
-echo json_encode($enrolment);
+echo json_encode($o);
 
 ?>

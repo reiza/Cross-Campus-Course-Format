@@ -17,7 +17,7 @@ class CryptoForUWISharedCourse {
 		$this->iv = substr(hash('sha256', $this->secret_iv), 0, 16);
 	}
 
-	public function wrap($course){
+	public function wrapCourse($course){
 		global $USER, $CFG;
 
 		$z = new StdClass();
@@ -26,6 +26,11 @@ class CryptoForUWISharedCourse {
 		$z->c = $course->smicourseid;
 		$z->d = $CFG->wwwroot;
 
+		return $this->wrap($z);
+	}
+
+
+	public function wrap($z){
 		$z = json_encode($z);
 		$z = openssl_encrypt($z, $this->encrypt_method, $this->key, 0, $this->iv);
 		$z = base64_encode($z);

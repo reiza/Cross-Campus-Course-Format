@@ -17,7 +17,7 @@ class format_uwishared_renderer extends plugin_renderer_base {
         $package = new CryptoForUWISharedCourse();
         $param = substr(uniqid(),-1);
 
-        $redirectUrl = $baseUrl . "/auth/ocauth/acs.php?$param=" . $package->wrap($course);
+        $redirectUrl = $baseUrl . "/auth/ocauth/acs.php?$param=" . $package->wrapCourse($course);
         $output = '<a class="btn btn-lg btn-primary" style="margin:20px;color:#fff" href="' . $redirectUrl . '">Go to the shared course</a>';
         return $output;
     }

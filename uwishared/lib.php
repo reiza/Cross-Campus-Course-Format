@@ -31,7 +31,7 @@ class format_uwishared extends format_base {
 
     if($jsonData){
       foreach ($jsonData as $key => $value) {
-        $sc[$key]=$value->fullname . ' / XRN: ' . $value->idnumber;
+        $sc[$value->idnumber]=$value->fullname . ' / XRN: ' . $value->idnumber;
       }
     }
 
@@ -72,7 +72,7 @@ class format_uwishared extends format_base {
     $package = new CryptoForUWISharedCourse();
     $param = substr(uniqid(),-1);
 
-    $redirectUrl = $baseUrl ."/auth/ocauth/acs.php?$param=" . $package->wrap($course);
+    $redirectUrl = $baseUrl ."/auth/ocauth/acs.php?$param=" . $package->wrapCourse($course);
     if (!is_siteadmin()) {
       redirect($redirectUrl);
     }
