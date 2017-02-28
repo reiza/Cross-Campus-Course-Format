@@ -16,11 +16,11 @@ $o->xrns = array();
 
 $sql = "SELECT
           u.username,
-          c.shortname as 'remotecourseshortname',
-          r.id as 'remoteroleid',
-          r.name as 'remoterolename',
-          r.shortname as 'remoteroleshortname',
-          cfo.value as 'smicourseid'
+          c.shortname AS remotecourseshortname,
+          r.id AS remoteroleid,
+          r.name AS remoterolename,
+          r.shortname AS remoteroleshortname,
+          cfo.value AS smicourseid
         FROM
           {role_assignments} ra
         JOIN {user} u ON ra.userid = u.id

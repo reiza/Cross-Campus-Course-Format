@@ -21,6 +21,7 @@ class CryptoForUWISharedCourse {
 		global $USER, $CFG;
 
 		$z = new StdClass();
+		$z->t = time();
 		$z->a = $USER->id;
 		$z->b = get_config('format_uwishared')->smimappingcampusid;
 		$z->c = $course->smicourseid;
