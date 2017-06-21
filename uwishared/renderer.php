@@ -20,10 +20,14 @@ class format_uwishared_renderer extends plugin_renderer_base {
 		$package = new crypto_for_uwi_shared();
 		
 		$redirectUrl = $baseUrl . "/auth/ocauth/acs.php?$param=" . $package->wrap($course);
-		if (!is_siteadmin()) {
+
+		if (!is_siteadmin() && strlen($redirectUrl) < 2084) {
 			redirect($redirectUrl);
+		} else if (strlen($redirectUrl) > 208) {
+			$output = '<form method="post" action="'. $baseUrl . '/auth/ocauth/acs.php"><input type="hidden" name="p' . $param . '" value = "' . $package->wrap($course) . '"/><button name="submit" id="submit" type="submit" class="btn btn-primary" data-loading-text="Going to course...">Go to the shared course</button></form>';
+		} else {
+			$output = '<a class="btn btn-lg btn-primary" style="margin:20px;color:#fff" href="' . $redirectUrl . '">Go to the shared course</a>';
 		}
-		$output = '<a class="btn btn-lg btn-primary" style="margin:20px;color:#fff" href="' . $redirectUrl . '">Go to the shared course</a>';
 		return $output;
      }
      
