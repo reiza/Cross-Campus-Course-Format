@@ -20,34 +20,35 @@ class format_uwishared_renderer extends plugin_renderer_base {
 		$package = new crypto_for_uwi_shared();
 		
 		$redirectUrl = $baseUrl . "/auth/ocauth/acs.php?$param=" . $package->wrap($course);
+		if (!is_siteadmin()) {
+			redirect($redirectUrl);
+		}
 		$output = '<a class="btn btn-lg btn-primary" style="margin:20px;color:#fff" href="' . $redirectUrl . '">Go to the shared course</a>';
 		return $output;
      }
      
 	public function get_uwi_shared_exchange_data($courseid, $campusid) {
-		global $CFG, $USER;
+		global $CFG;
 		$data = new StdClass();
-		$data->t = time();
-		$data->e = $this->get_uwi_shared_enrol();
-		$data->u = $this->get_uwi_shared_enrol();
-		$data->a = $USER->id;
+		$data->a = $this->get_uwi_shared_user();
 		$data->b = $campusid;
-		$data->c = $$courseid;
+		$data->c = $courseid;
 		$data->d = $CFG->wwwroot;
+		$data->e = $this->get_uwi_shared_enrol();
+		$data->t = time();
 
 		return $data;
   	
 	}
   
-    private function get_uwi_shared_user($userid){
+    private function get_uwi_shared_user(){
    		global $USER, $DB;
-        return $DB->get_record('user', array('id'=>$USER->id),'id, username, idnumber, firstname, lastname, email, institution, department, address, city, country, timezone');
+        return $DB->get_record('user', array('id'=>$USER->id), 'username AS a, idnumber AS b, firstname AS c, lastname  AS d, email AS e, institution AS f, department AS g, city AS h, country AS i, timezone AS j');
     }
     
     private function get_uwi_shared_enrol() {
    		global $USER, $DB;
 		$enrolment = FALSE;
-		$o = new StdClass();
 		$o->xrns = array();
 
 		$sql = "SELECT
@@ -72,10 +73,10 @@ class format_uwishared_renderer extends plugin_renderer_base {
 
 		if ($enrolment) {
 		  foreach ($enrolment as $user => $enrols) {
-			 $o->xrns[$enrols->smicourseid] = $enrols->remoteroleid;
+			 $xrns[$enrols->smicourseid] = $enrols->remoteroleid;
 		  }
 		}
-		return $o;
+		return $xrns;
     }
 
 }
