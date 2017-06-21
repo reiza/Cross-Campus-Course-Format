@@ -1,6 +1,6 @@
 <?php
 /**
-* @package   format_uwishared
+* @package    format_uwishared
 * @copyright OC Dev Team
 */
 defined('MOODLE_INTERNAL') || die;
