@@ -55,13 +55,13 @@ class format_uwishared_renderer extends plugin_renderer_base {
         $o->xrns = array();
 
         $sql = "SELECT u.username, c.shortname AS remotecourseshortname, r.id AS remoteroleid, r.name AS remoterolename, r.shortname AS remoteroleshortname, cfo.value AS smicourseid
-        		FROM {role_assignments} ra 
-        		JOIN {user} u ON ra.userid = u.id
-        		JOIN {context} ctx ON ra.contextid = ctx.id
-        		JOIN {course} c ON ctx.instanceid=c.id
-				JOIN {role} r ON ra.roleid=r.id
-				JOIN {course_format_options} cfo ON cfo.courseid=c.id AND cfo.name='smicourseid'
-				WHERE u.username = ?";
+                FROM {role_assignments} ra 
+                JOIN {user} u ON ra.userid = u.id
+                JOIN {context} ctx ON ra.contextid = ctx.id
+                JOIN {course} c ON ctx.instanceid=c.id
+                JOIN {role} r ON ra.roleid=r.id
+                JOIN {course_format_options} cfo ON cfo.courseid=c.id AND cfo.name='smicourseid'
+                WHERE u.username = ?";
 
         $enrolment = $DB->get_records_sql($sql, array($USER->id));
 
