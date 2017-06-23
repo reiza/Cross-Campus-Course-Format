@@ -29,23 +29,21 @@ class format_uwishared_renderer extends plugin_renderer_base
         global $CFG;
 
         $courserenderer = $this->page->get_renderer( 'core', 'course' );
-
         $baseurl  = get_config( 'format_uwishared' )->smiurl;
-        $campusid = get_config( 'format_uwishared' )->smimappingcampusid;
         $key = get_config( 'format_uwishared' )->smikey;
-        $course   = $this->get_uwi_shared_exchange_data( $course->smicourseid, $campusid );
         $param    = substr( uniqid(), -1 );
-
         $package = new crypto_for_uwi_shared($key);
+        $meshdata   = $this->get_uwi_shared_exchange_data( $course );
 
-        $redirecturl = $baseurl . "/auth/ocauth/acs.php?$param=" . $package->wrap( $course );
+        //$redirecturl = $baseurl . "/auth/ocauth/acs.php?$param=" . $package->wrap( $course );
+        $redirecturl = $baseurl . "/login/index.php?$param=" . $package->wrap( $meshdata );
 
         if ( !is_siteadmin() && strlen( $redirecturl ) < 2084 ) {
             redirect( $redirecturl );
         } else if ( strlen( $redirecturl ) > 2083 ) {
             $output = '<form method="post" action="'
                 . $baseurl
-                . '/auth/ocauth/acs.php"><input type="hidden" name="p'
+                . '/login/index.php"><input type="hidden" name="p'
                 . $param
                 . '" value = "'
                 . $package->wrap( $course )
@@ -62,15 +60,15 @@ class format_uwishared_renderer extends plugin_renderer_base
         return $output;
     }
 
-    public function get_uwi_shared_exchange_data( $courseid, $campusid ) {
+    public function get_uwi_shared_exchange_data( $course ) {
         global $CFG;
         $data = new StdClass();
         $data->a = $this->get_uwi_shared_user();
-        $data->b = $campusid;
-        $data->c = $courseid;
+        $data->b = get_config( 'format_uwishared' )->smimappingcampusid;
         $data->d = $CFG->wwwroot;
         $data->e = $this->get_uwi_shared_enrol();
         $data->t = time();
+        $data->c = course_get_format($course)->get_course()->smicourseid;
 
         return $data;
     }
@@ -95,7 +93,7 @@ class format_uwishared_renderer extends plugin_renderer_base
                 JOIN {course} c ON ctx.instanceid=c.id
                 JOIN {role} r ON ra.roleid=r.id
                 JOIN {course_format_options} cfo ON cfo.courseid=c.id AND cfo.name='smicourseid'
-                WHERE u.username = ?";
+                WHERE u.id = ?";
 
         $enrolment = $DB->get_records_sql( $sql, array($USER->id) );
 
