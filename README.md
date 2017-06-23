@@ -12,6 +12,7 @@ This is a course format for Moodle
 6. Moodle should display the "Upgrading to new version" page and a success message. Click on the "Continue" button.
 7. The settings page for the URL of Moodle with Shared Courses should now be displayed. 
   - Enter the URL for the Moodle with the shared courses
+  - Enter the key code for the Moodle with the shared courses
   - Set the Campus of origin
   - Click "Save Changes" button
 8. The plugin is installed and should be available for use in courses.
@@ -23,3 +24,10 @@ This is a course format for Moodle
 4. Set the format to "UWI Shared Course",
 5. Choose the shared course from the dropdown list.
 6. Click "Save and Display" button.
+
+
+## End User Instructions
+1. Sign in to your campus Moodle.
+2. Navigate to your course.
+3. Your browser should automatically take you to the course. If this did not happen, please click on the "Go to the shared course" button.
+4. Access your course content and activities.
