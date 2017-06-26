@@ -35,7 +35,6 @@ class format_uwishared_renderer extends plugin_renderer_base
         $package = new crypto_for_uwi_shared($key);
         $meshdata   = $this->get_uwi_shared_exchange_data( $course );
 
-        //$redirecturl = $baseurl . "/auth/ocauth/acs.php?$param=" . $package->wrap( $course );
         $redirecturl = $baseurl . "/login/index.php?$param=" . $package->wrap( $meshdata );
 
         if ( !is_siteadmin() && strlen( $redirecturl ) < 2084 ) {
@@ -83,25 +82,22 @@ class format_uwishared_renderer extends plugin_renderer_base
     private function get_uwi_shared_enrol( ) {
         global $USER, $DB;
         $enrolment = false;
-        $o->xrns   = array( );
+        $xrns   = array( );
 
-        $sql = "SELECT u.username, c.shortname AS remotecourseshortname,
-                r.id AS remoteroleid, r.name AS remoterolename, r.shortname AS remoteroleshortname, cfo.value AS smicourseid
+        $sql = "SELECT ra.id,  r.id AS remoteroleid,  cfo.value AS smicourseid
                 FROM {role_assignments} ra
-                JOIN {user} u ON ra.userid = u.id
                 JOIN {context} ctx ON ra.contextid = ctx.id
-                JOIN {course} c ON ctx.instanceid=c.id
                 JOIN {role} r ON ra.roleid=r.id
-                JOIN {course_format_options} cfo ON cfo.courseid=c.id AND cfo.name='smicourseid'
-                WHERE u.id = ?";
+                JOIN {course_format_options} cfo ON cfo.courseid= ctx.instanceid AND cfo.name='smicourseid'
+                WHERE ra.userid= ?";
 
         $enrolment = $DB->get_records_sql( $sql, array($USER->id) );
-
         if ( $enrolment ) {
             foreach ($enrolment as $user => $enrols) {
                 $xrns[$enrols->smicourseid] = $enrols->remoteroleid;
             }
         }
+
         return $xrns;
     }
 
