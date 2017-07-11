@@ -10,7 +10,7 @@ This is a course format for Moodle
 4. Moodle should detect the plugin redirect you, to the "Plugins Check" page.
 5. Click on the "Upgrade Moodle database now" button.
 6. Moodle should display the "Upgrading to new version" page and a success message. Click on the "Continue" button.
-7. The settings page for the URL of Cross Campus Moodle with Cross Campus Courses should now be displayed.
+7. The settings page for the Cross Campus Course Format plugin should now be displayed.
   - Enter the URL for the Moodle with the shared courses
   - Enter the key code for the Moodle with the shared courses
   - Set the Campus of origin
