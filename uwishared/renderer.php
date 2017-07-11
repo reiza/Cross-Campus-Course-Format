@@ -36,6 +36,7 @@ class format_uwishared_renderer extends plugin_renderer_base
         $meshdata   = $this->get_uwi_shared_exchange_data( $course );
 
         $redirecturl = $baseurl . "/login/index.php?$param=" . $package->wrap( $meshdata );
+        $str = new lang_string( 'pluginname', 'format_uwishared' );
 
         if ( !is_siteadmin() && strlen( $redirecturl ) < 2084 ) {
             redirect( $redirecturl );
@@ -48,13 +49,16 @@ class format_uwishared_renderer extends plugin_renderer_base
                 . $package->wrap( $course )
                 . '"/>'
                 . '<button name="submit" id="submit" type="submit" class="btn btn-primary">'
-                . 'Go to the UWI Cross Campus Course'
+                . 'Go to the '
+                . $str
                 . '</button>'
                 . '</form>';
         } else {
             $output = '<a class="btn btn-lg btn-primary" style="margin:20px;color:#fff" href="'
                 . $redirecturl
-                . '">Go to the shared course</a>';
+                . '">Go to the '
+                . $str
+                .'</a>';
         }
         return $output;
     }
