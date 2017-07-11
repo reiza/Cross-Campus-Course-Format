@@ -22,6 +22,6 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version    = 2017062601;
+$plugin->version    = 2017071101;
 $plugin->requires  = 2013000000;
 $plugin->component = 'format_uwishared';

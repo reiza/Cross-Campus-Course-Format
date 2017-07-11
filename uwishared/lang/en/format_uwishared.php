@@ -20,14 +20,14 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['smicourseid'] = 'Shared Course';
-$string['smicourseid_help'] = 'This setting specifies the Course in the Shared Moodle Instance that is mapped to this course shell. (XCN is the course idnumber on the remote moodle)';
+$string['smicourseid'] = 'Cross Campus Course';
+$string['smicourseid_help'] = 'This setting specifies the Course in the Cross Campus Moodle Instance that is mapped to this course shell. (XCN is the course idnumber on the remote moodle)';
 $string['smimappingcampusid'] = 'Campus';
 $string['smimappingcampusid_help'] = 'This setting specifies the user\'s UWI Campus.';
 $string['smimappingcampusiddesc'] = 'This setting specifies the user\'s UWI Campus.';
-$string['pluginname'] = 'UWI Shared Course';
+$string['pluginname'] = 'UWI Cross Campus Course';
 $string['sectionname'] = 'section';
-$string['smiurl'] = 'Shared Moodle Instance URL';
-$string['smiurldesc'] = 'URL of Shared Moodle Instance with Shared Courses. No trailing \'/\' required.';
+$string['smiurl'] = 'Cross Campus Moodle Instance URL';
+$string['smiurldesc'] = 'URL of Cross Campus Moodle Instance with Shared Courses. No trailing \'/\' required.';
 $string['smikey'] = 'Key';
-$string['smikeydesc'] = 'Shared Moodle Instance Key';
+$string['smikeydesc'] = 'Cross Campus Moodle Instance Key';

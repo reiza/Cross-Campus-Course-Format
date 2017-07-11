@@ -48,7 +48,7 @@ class format_uwishared_renderer extends plugin_renderer_base
                 . $package->wrap( $course )
                 . '"/>'
                 . '<button name="submit" id="submit" type="submit" class="btn btn-primary">'
-                . 'Go to the shared course'
+                . 'Go to the UWI Cross Campus Course'
                 . '</button>'
                 . '</form>';
         } else {
