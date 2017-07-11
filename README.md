@@ -11,8 +11,8 @@ This is a course format for Moodle
 5. Click on the "Upgrade Moodle database now" button.
 6. Moodle should display the "Upgrading to new version" page and a success message. Click on the "Continue" button.
 7. The settings page for the Cross Campus Course Format plugin should now be displayed.
-  - Enter the URL for the Moodle with the shared courses
-  - Enter the key code for the Moodle with the shared courses
+  - Enter the URL for the Moodle with the Cross Campus courses
+  - Enter the key code for the Moodle with the Cross Campus courses
   - Set the Campus of origin
   - Click "Save Changes" button
 8. The plugin is installed and should be available for use in courses.
@@ -22,7 +22,7 @@ This is a course format for Moodle
 2. Go to Course administration -> Edit settings.
 3. Go to Course Format section.
 4. Set the format to "UWI Cross Campus Course",
-5. Choose the shared course from the dropdown list.
+5. Choose the Cross Campus course from the dropdown list.
 6. Click "Save and Display" button.
 
 
