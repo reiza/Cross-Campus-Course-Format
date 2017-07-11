@@ -5,7 +5,7 @@ This is a course format for Moodle
 ## Installation
 
 1. Unzip the Cross Campus Course Format zip file.
-2. Copy the uwishared directory to the 'courses/format/' directory in Moodle.
+2. Copy the 'uwishared' directory to the 'courses/format/' directory in Moodle.
 3. Login into Moodle as an administrator and go to Site Administration -> Notifications.
 4. Moodle should detect the plugin redirect you, to the "Plugins Check" page.
 5. Click on the "Upgrade Moodle database now" button.
