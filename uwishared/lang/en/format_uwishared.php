@@ -26,6 +26,7 @@ $string['smimappingcampusid'] = 'Campus';
 $string['smimappingcampusid_help'] = 'This setting specifies the user\'s UWI Campus.';
 $string['smimappingcampusiddesc'] = 'This setting specifies the user\'s UWI Campus.';
 $string['pluginname'] = 'UWI Cross Campus Course';
+$string['ivlegacy'] = 'Hash Generation';
 $string['sectionname'] = 'section';
 $string['smiurl'] = 'Cross Campus Moodle Instance URL';
 $string['smiurldesc'] = 'URL of Cross Campus Moodle Instance with Shared Courses. No trailing \'/\' required.';

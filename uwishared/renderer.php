@@ -20,33 +20,33 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined( 'MOODLE_INTERNAL' ) || die( );
+defined('MOODLE_INTERNAL') || die();
 
 class format_uwishared_renderer extends plugin_renderer_base
 {
 
-    public function display( $course ) {
+    public function display($course) {
         global $CFG;
 
-        $courserenderer = $this->page->get_renderer( 'core', 'course' );
-        $baseurl  = get_config( 'format_uwishared' )->smiurl;
-        $key = get_config( 'format_uwishared' )->smikey;
-        $param    = substr( uniqid(), -1 );
+        $courserenderer = $this->page->get_renderer('core', 'course');
+        $baseurl  = get_config('format_uwishared')->smiurl;
+        $key = get_config('format_uwishared')->smikey;
+        $param    = substr(uniqid(), -1);
         $package = new crypto_for_uwi_shared($key);
-        $meshdata   = $this->get_uwi_shared_exchange_data( $course );
+        $meshdata   = $this->get_uwi_shared_exchange_data($course);
 
-        $redirecturl = $baseurl . "/login/index.php?$param=" . $package->wrap( $meshdata );
-        $str = new lang_string( 'pluginname', 'format_uwishared' );
+        $redirecturl = $baseurl . "/login/index.php?$param=" . $package->wrap($meshdata);
+        $str = new lang_string('pluginname', 'format_uwishared');
 
-        if ( !is_siteadmin() && strlen( $redirecturl ) < 2084 ) {
-            redirect( $redirecturl );
-        } else if ( strlen( $redirecturl ) > 2083 ) {
+        if (!is_siteadmin() && strlen($redirecturl) < 2084) {
+            redirect($redirecturl);
+        } else if (strlen($redirecturl) > 2083) {
             $output = '<form method="post" action="'
                 . $baseurl
                 . '/login/index.php"><input type="hidden" name="p'
                 . $param
                 . '" value = "'
-                . $package->wrap( $course )
+                . $package->wrap($course)
                 . '"/>'
                 . '<button name="submit" id="submit" type="submit" class="btn btn-primary">'
                 . 'Go to the '
@@ -54,7 +54,7 @@ class format_uwishared_renderer extends plugin_renderer_base
                 . '</button>'
                 . '</form>';
         } else {
-            $output = '<a class="btn btn-lg btn-primary" style="margin:20px;color:#fff" href="'
+            $output = '<a class="btn btn-lg btn-primary uwishared" href="'
                 . $redirecturl
                 . '">Go to the '
                 . $str
@@ -63,11 +63,11 @@ class format_uwishared_renderer extends plugin_renderer_base
         return $output;
     }
 
-    public function get_uwi_shared_exchange_data( $course ) {
+    public function get_uwi_shared_exchange_data($course) {
         global $CFG;
         $data = new StdClass();
         $data->a = $this->get_uwi_shared_user();
-        $data->b = get_config( 'format_uwishared' )->smimappingcampusid;
+        $data->b = get_config('format_uwishared')->smimappingcampusid;
         $data->d = $CFG->wwwroot;
         $data->e = $this->get_uwi_shared_enrol();
         $data->t = time();
@@ -76,17 +76,17 @@ class format_uwishared_renderer extends plugin_renderer_base
         return $data;
     }
 
-    private function get_uwi_shared_user( ) {
+    private function get_uwi_shared_user() {
         global $USER, $DB;
-        return $DB->get_record( 'user', array('id' => $USER->id),
+        return $DB->get_record('user', array('id' => $USER->id),
             'username AS a, idnumber AS b, firstname AS c, lastname  AS d, email AS e,
-            institution AS f, department AS g, city AS h, country AS i, timezone AS j' );
+            institution AS f, department AS g, city AS h, country AS i, timezone AS j');
     }
 
-    private function get_uwi_shared_enrol( ) {
+    private function get_uwi_shared_enrol() {
         global $USER, $DB;
         $enrolment = false;
-        $xrns   = array( );
+        $xrns   = array();
 
         $sql = "SELECT ra.id,  r.id AS remoteroleid,  cfo.value AS smicourseid
                 FROM {role_assignments} ra
@@ -95,8 +95,8 @@ class format_uwishared_renderer extends plugin_renderer_base
                 JOIN {course_format_options} cfo ON cfo.courseid= ctx.instanceid AND cfo.name='smicourseid'
                 WHERE ra.userid= ?";
 
-        $enrolment = $DB->get_records_sql( $sql, array($USER->id) );
-        if ( $enrolment ) {
+        $enrolment = $DB->get_records_sql($sql, array($USER->id));
+        if ($enrolment) {
             foreach ($enrolment as $user => $enrols) {
                 $xrns[$enrols->smicourseid] = $enrols->remoteroleid;
             }
@@ -113,21 +113,25 @@ class crypto_for_uwi_shared {
     private $iv;
 
     public function __construct($key) {
-        $this->key = hash( 'sha256', $key );
-        $this->iv  = substr( hash( 'sha256', '' ), 0, 16 );
-    }
+        $this->key = hash('sha256', $key);
+        $ivlegacy = get_config('ivlegacy', 'format_uwishared');
+        if ($ivlegacy) {
+        	$this->iv  = substr( hash( 'sha256', '' ), 0, 16 );
+        } else {
+        	$this->iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length($this->encryptmethod));
+        }}
 
-    public function wrap( $z ) {
-        $z = json_encode( $z );
-        $z = openssl_encrypt( $z, $this->encryptmethod, $this->key, 0, $this->iv );
-        $z = base64_encode( $z );
+    public function wrap($z) {
+        $z = json_encode($z);
+        $z = openssl_encrypt($z, $this->encryptmethod, $this->key, 0, $this->iv);
+        $z = base64_encode($z);
         return $z;
     }
 
-    public function unwrap( $z ) {
-        $z = base64_decode( $z );
-        $z = openssl_decrypt( $z, $this->encrypt_method, $this->key, 0, $this->iv );
-        $z = json_decode( $z );
+    public function unwrap($z) {
+        $z = base64_decode($z);
+        $z = openssl_decrypt($z, $this->encrypt_method, $this->key, 0, $this->iv);
+        $z = json_decode($z);
         return $z;
     }
 }

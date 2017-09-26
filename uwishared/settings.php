@@ -24,7 +24,15 @@ defined('MOODLE_INTERNAL') || die;
 require_once($CFG->dirroot . '/course/format/singleactivity/settingslib.php');
 
 if ($ADMIN->fulltree) {
-
+	
+	$settings->add(
+			new admin_setting_configcheckbox('format_uwishared/ivlegacy',
+				new lang_string('ivlegacy', 'format_uwishared'),
+				'',
+				0
+			)
+		);
+	
     $settings->add(
         new admin_setting_configtext('format_uwishared/smiurl',
             new lang_string('smiurl', 'format_uwishared'),
@@ -45,7 +53,7 @@ if ($ADMIN->fulltree) {
         new admin_setting_configselect('format_uwishared/smimappingcampusid',
             new lang_string('smimappingcampusid', 'format_uwishared'),
             new lang_string('smimappingcampusiddesc', 'format_uwishared'),
-            '',
+            'CAV',
             array(
                 'CAV' => 'Cave Hill',
                 'MON' => 'Mona',
