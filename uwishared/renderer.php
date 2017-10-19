@@ -114,7 +114,7 @@ class crypto_for_uwi_shared {
 
     public function __construct($key) {
         $this->key = hash('sha256', $key);
-        $ivlegacy = get_config('ivlegacy', 'format_uwishared');
+        $ivlegacy = get_config('format_uwishared', 'ivlegacy');
         if ($ivlegacy) {
         	$this->iv  = substr( hash( 'sha256', '' ), 0, 16 );
         } else {
