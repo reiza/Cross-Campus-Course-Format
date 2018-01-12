@@ -15,7 +15,7 @@ This is a course format for Moodle
   - [ ] Enter the URL for the Moodle instance with the Cross Campus courses
   - [ ] Enter the key code for the Moodle instance with the Cross Campus courses
   - [ ] Set the Campus of origin
-  - Click "Save Changes" button
+  - [ ] Click "Save Changes" button
 8. The plugin is installed and should be available for use in courses.
 
 ## Usage
