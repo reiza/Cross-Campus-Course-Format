@@ -15,16 +15,18 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Plugin version and other meta-data are defined here.
+ * Code to be executed after the plugin's database scheme has been installed is defined here.
  *
  * @package     format_uwishared
+ * @category    upgrade
  * @copyright   2023 UWI OC
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+/**
+ * Custom code to be run on installing the plugin.
+ */
+function xmldb_format_uwishared_install() {
 
-$plugin->component = 'format_uwishared';
-$plugin->release = '0.1.0';
-$plugin->version = 2023060900;
-$plugin->requires = 2022112800;
+    return true;
+}

@@ -15,16 +15,18 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Plugin version and other meta-data are defined here.
+ * Code that is executed before the tables and data are dropped during the plugin uninstallation.
  *
  * @package     format_uwishared
+ * @category    upgrade
  * @copyright   2023 UWI OC
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+/**
+ * Custom uninstallation procedure.
+ */
+function xmldb_format_uwishared_uninstall() {
 
-$plugin->component = 'format_uwishared';
-$plugin->release = '0.1.0';
-$plugin->version = 2023060900;
-$plugin->requires = 2022112800;
+    return true;
+}

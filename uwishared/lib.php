@@ -1,5 +1,5 @@
 <?php
-// This file is part of Moodle - http://moodle.org/
+// This file is part of Moodle - https://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -12,21 +12,39 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * @package format_uwishared
- * @copyright OC Dev Team
- * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ *  Format base class.
+ *
+ * @package     format_uwishared
+ * @copyright   2023 UWI OC
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+defined('MOODLE_INTERNAL') || die();
+require_once($CFG->dirroot . '/course/format/lib.php');
 
-defined( 'MOODLE_INTERNAL' ) || die( );
+class format_uwishared extends core_courseformat\base {
 
-require_once( $CFG->dirroot . '/course/format/lib.php' );
+    public function uses_indentation(): bool {
+        return false;
+    }
 
-class format_uwishared extends format_base {
+    /**
+     * Returns the information about the ajax support in the given source format.
+     *
+     * The returned object's property (boolean)capable indicates that
+     * the course format supports Moodle course ajax features.
+     *
+     * @return stdClass
+     */
+    public function supports_ajax() {
+        $ajaxsupport = new stdClass();
+        $ajaxsupport->capable = true;
+        return $ajaxsupport;
+    }
 
-    public function get_view_url( $section, $options = array( ) ) {
+     public function get_view_url( $section, $options = array( ) ) {
         return null;
     }
 
@@ -44,7 +62,7 @@ class format_uwishared extends format_base {
         $baseurl  = get_config( 'format_uwishared' )->smiurl;
         $sc       = array( );
         $json     = download_file_content( $baseurl . '/sharedcourses.php' );
-        $jsondata = (array) json_decode( $json );
+	$jsondata = (array) json_decode( $json );
 
         if ( $jsondata ) {
             foreach ($jsondata as $key => $value) {
@@ -84,3 +102,4 @@ class format_uwishared extends format_base {
     }
 
 }
+
